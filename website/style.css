@@ -1,14 +1,26 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body,html{
+    height: 100%;
+    width: 100%;
+}
+
 body{
     background: #fffff8;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 #app{
+    position: relative;
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
+    grid-template-rows: 5% 15% 50% 20%;
     /* grid-template-columns:  */
-    height:100vh;
-    background: #f23557;
+    height:100%;
+    grid-template-columns: 100%;
+    background:#fff;
     color: #f0d43a;
     justify-content: center;
     grid-gap: 1em;
@@ -28,6 +40,23 @@ body{
 
 }
 
+.zip{
+text-align: center;
+color: #000;
+}
+label[for='zip'], #zip{
+    position: relative;
+    width: 50%;
+    left: 25%;
+}
+#zip{
+    background-color: #fff;
+    border: #22b2da solid 2px;
+    border-radius: 20px;
+    text-align: center;
+    color: #000;
+}
+
 #date{
 
 }
@@ -41,7 +70,8 @@ body{
 }
 
 .headline {
-
+    color:#3b4a6b;
+    font-size: 3rem;
 }
 .title{
 

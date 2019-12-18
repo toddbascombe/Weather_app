@@ -22,6 +22,11 @@ app.get("/", (req, res) => {
   res.send("index");
 });
 
+app.post("/",(req, res)=>{
+  const data = req.body;
+  console.log(data);
+})
+
 // Setup Server
 app.listen(port, () => {
   console.log("server is ready!!");
