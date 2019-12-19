@@ -1,5 +1,18 @@
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
+const mainImages = {
+  hot: "https://media.giphy.com/media/26BRR33sZ9O08MPG8/source.gif",
+  cold: "https://media.giphy.com/media/26FLdaDQ5f72FPbEI/source.gif",
+  rain: "https://media.giphy.com/media/3oKIPstwMF15FghbYQ/source.gif",
+  snow: "https://media.giphy.com/media/RBBWcwzuYIoOA/source.gif",
+  windy: "https://media.giphy.com/media/2v1Y2dt4FvwI0/source.gif",
+  storm: "https://media.giphy.com/media/67vBafnTcPz85kXnE0/source.gif",
+  tornado: "https://media.giphy.com/media/ed8JGxnQmrke4/source.gif",
+  clear_sky: "https://media.giphy.com/media/VxbvpfaTTo3le/source.gif",
+  cloudy: "https://media.giphy.com/media/alEGxmahCCywE/source.gif"
+};
+
+const current_weather = {};
 
 // Require Express to run server and routes
 const express = require("express");
@@ -22,10 +35,16 @@ app.get("/", (req, res) => {
   res.send("index");
 });
 
-app.post("/",(req, res)=>{
+app.post("/", (req, res) => {
   const data = req.body;
-  console.log(data);
-})
+  projectData.userWeather = data;
+
+  console.log(projectData);
+});
+
+app.get("/weather", (req, res) => {
+  res.send([projectData, mainImages]);
+});
 
 // Setup Server
 app.listen(port, () => {
