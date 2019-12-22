@@ -39,7 +39,7 @@ app.post("/", (req, res) => {
   const data = req.body;
   projectData.userWeather = data;
 
-  console.log(projectData.userWeather.list[0].weather);
+  console.log(projectData.userWeather.name);
 });
 
 app.get("/weather", (req, res) => {

@@ -4,6 +4,7 @@
 let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
 const weatherApi = "http://api.openweathermap.org/data/2.5/forecast?zip=";
+const currentApi = "http://api.openweathermap.org/data/2.5/weather?zip=";
 const apiKey = "&APPID=24ee761b29b537c6cb57bbcd2097d2e3";
 
 const userInfo = () => {
@@ -12,10 +13,9 @@ const userInfo = () => {
 };
 
 const getWeather = async zip => {
-  let finish_message = false;
-  await fetch(weatherApi + zip + apiKey).then(value => {
-    value.json().then(weather => {
-      postData("/", weather);
+  await fetch(currentApi + zip + apiKey).then(value2 => {
+    value2.json().then(current_weather_api_value => {
+      postData("/", current_weather_api_value);
       add_server_data();
     });
   });
@@ -33,6 +33,7 @@ const postData = async (url = "", data) => {
   });
   try {
     const newData = await res.json();
+    console.log(newData);
     return newData;
   } catch (err) {
     console.log("Error " + err);
@@ -42,9 +43,10 @@ const postData = async (url = "", data) => {
 const add_server_data = async () => {
   await fetch("/weather").then(server_data => {
     server_data.json().then(data => {
-      document.querySelector(".city h2").textContent =
-        data[0].userWeather.city.name;
-      console.log(data);
+      document.querySelector(".city h2").textContent = data[0].userWeather.name;
+      if (data[0].userWeather.weather.main == "Clouds") {
+        document.querySelector(".image img").
+      }
     });
   });
 };
