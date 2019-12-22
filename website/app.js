@@ -12,13 +12,13 @@ const userInfo = () => {
 };
 
 const getWeather = async zip => {
-  await fetch(weatherApi + zip + apiKey)
-    .then(value => {
-      value.json().then(weather => {
-        postData("/", weather);
-      });
-    })
-    .then(add_server_data());
+  let finish_message = false;
+  await fetch(weatherApi + zip + apiKey).then(value => {
+    value.json().then(weather => {
+      postData("/", weather);
+      add_server_data();
+    });
+  });
 };
 
 const postData = async (url = "", data) => {
@@ -44,6 +44,7 @@ const add_server_data = async () => {
     server_data.json().then(data => {
       document.querySelector(".city h2").textContent =
         data[0].userWeather.city.name;
+      console.log(data);
     });
   });
 };
