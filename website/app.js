@@ -13,24 +13,26 @@ const userInfo = () => {
 };
 
 const getWeather = async zip => {
-  await fetch(currentApi + zip + apiKey).then(value2 => {
-    value2.json().then(current_weather_api_value => {
-      postData("/", current_weather_api_value);
-      add_server_data();
-    });
-  });
+
+  let [current_weather, future_weather] = await Promise.all([fetch(currentApi+zip+apiKey), fetch(weatherApi+zip+apiKey)])
+    current_weather.json().then(value =>{
+      postData("/", value)
+      });
+    future_weather.json().then(value=>{
+      postData("/future_weather", value);
+    })
 };
 
-const postData = async (url = "", data) => {
+const postData = async (url ="", data) => {
   const res = await fetch(url, {
-    method: "POST",
+    method: "post",
     mode: "cors",
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  });
+  })
   try {
     const newData = await res.json();
     console.log(newData);
@@ -43,10 +45,7 @@ const postData = async (url = "", data) => {
 const add_server_data = async () => {
   await fetch("/weather").then(server_data => {
     server_data.json().then(data => {
-      document.querySelector(".city h2").textContent = data[0].userWeather.name;
-      if (data[0].userWeather.weather.main == "Clouds") {
-        document.querySelector(".image img").
-      }
+      document.querySelector(".city h2").textContent = data.userWeather.name;
     });
   });
 };
