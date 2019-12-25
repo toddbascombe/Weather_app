@@ -33,7 +33,7 @@ app.post("/future_weather", (req, res)=>{
   const data = req.body;
   projectData.future_weather = data;
   
-})
+});
 
 app.get("/weather", (req, res) => {
   res.send([projectData]);

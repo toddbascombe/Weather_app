@@ -17,9 +17,11 @@ const getWeather = async zip => {
   let [current_weather, future_weather] = await Promise.all([fetch(currentApi+zip+apiKey), fetch(weatherApi+zip+apiKey)])
     current_weather.json().then(value =>{
       postData("/", value)
+      add_server_data();
       });
     future_weather.json().then(value=>{
       postData("/future_weather", value);
+      add_server_data();
     })
 };
 
