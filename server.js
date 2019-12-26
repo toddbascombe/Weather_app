@@ -25,14 +25,11 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
   const data = req.body;
   projectData.current_weather = data;
-  console.log(data);
-  
 });
 
-app.post("/future_weather", (req, res)=>{
+app.post("/future_weather", (req, res) => {
   const data = req.body;
   projectData.future_weather = data;
-  
 });
 
 app.get("/weather", (req, res) => {

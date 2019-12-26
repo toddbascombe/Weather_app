@@ -13,19 +13,21 @@ const userInfo = () => {
 };
 
 const getWeather = async zip => {
-
-  let [current_weather, future_weather] = await Promise.all([fetch(currentApi+zip+apiKey), fetch(weatherApi+zip+apiKey)])
-    current_weather.json().then(value =>{
-      postData("/", value)
-      add_server_data();
-      });
-    future_weather.json().then(value=>{
-      postData("/future_weather", value);
-      add_server_data();
-    })
+  let [current_weather, future_weather] = await Promise.all([
+    fetch(currentApi + zip + apiKey),
+    fetch(weatherApi + zip + apiKey)
+  ]);
+  current_weather.json().then(value => {
+    postData("/", value);
+    add_server_data();
+  });
+  future_weather.json().then(value => {
+    postData("/future_weather", value);
+    add_server_data();
+  });
 };
 
-const postData = async (url ="", data) => {
+const postData = async (url = "", data) => {
   const res = await fetch(url, {
     method: "post",
     mode: "cors",
@@ -34,7 +36,7 @@ const postData = async (url ="", data) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
+  });
   try {
     const newData = await res.json();
     console.log(newData);
@@ -47,7 +49,11 @@ const postData = async (url ="", data) => {
 const add_server_data = async () => {
   await fetch("/weather").then(server_data => {
     server_data.json().then(data => {
-      document.querySelector(".city h2").textContent = data.userWeather.name;
+      document.querySelector(".city h2").textContent =
+        data[0].current_weather.name;
+      document.querySelector(
+        "#current_weather_icon"
+      ).src = `http://openweathermap.org/img/wn/${data[0].current_weather.weather[0].icon}@2x.png`;
     });
   });
 };
