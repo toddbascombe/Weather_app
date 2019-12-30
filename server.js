@@ -23,12 +23,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  const data = req.body;
+  let data = req.body;
   projectData.current_weather = data;
 });
 
 app.post("/future_weather", (req, res) => {
-  const data = req.body;
+  let data = req.body;
   projectData.future_weather = data;
 });
 

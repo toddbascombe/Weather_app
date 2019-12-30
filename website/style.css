@@ -59,6 +59,21 @@ label[for="zip"],
 
 .feel {
   color: #000;
+  text-align: center;
+}
+
+.city h2 {
+  font-size: 3em;
+}
+#current_weather_icon {
+  width: 12rem;
+  height: 12rem;
+}
+
+.weather__type,
+.current__temp,
+.feel__like {
+  font-size: 2em;
 }
 
 #date {
