@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  background: #fffff8;
+  background: #fff;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -21,7 +21,7 @@ body {
   /* grid-template-columns:  */
   height: 100%;
   grid-template-columns: 100%;
-  background: #fff;
+  background: linear-gradient(#f5fcff, #7ad7f0);
   color: #f0d43a;
   justify-content: center;
   grid-gap: 1em;
