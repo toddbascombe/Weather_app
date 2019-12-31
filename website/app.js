@@ -16,7 +16,6 @@ const getWeather = async zip => {
   ]);
   current_weather.json().then(value => {
     postData("/", value);
-    add_server_data();
   });
   future_weather.json().then(value => {
     postData("/future_weather", value);
@@ -46,20 +45,32 @@ const postData = async (url = "", data) => {
 const kelvin_to_fahrenheit = kelvin_temp =>
   Math.round(kelvin_temp * 1.8 - 459.67);
 
-const element_creator = (element, classInfo) =>
-  (document.createElement(element).className = classInfo);
+const element_creator = (element, class_name) => {
+  const element_holder = document.createElement(element);
+  element_holder.className = class_name;
+  return element_holder;
+};
+
+const unix_timestamp_converter = unix_timestamp => {
+  const date_info = new Date(unix_timestamp * 1000);
+  return date_info.getHours();
+};
 
 const weather_append = weather_data => {
   const entry = document.querySelector(".entry");
   for (weather of weather_data) {
     let entryHolder = element_creator("div", "entryHolder");
-    let date = element_creator("div", "date");
-    let temp = element_creator("div", "temp");
     let icon = element_creator("div", "icon");
-    entryHolder.appendChild(date);
-    entryHolder.appendChild(icon);
+    let temp = element_creator("div", "temp");
+    let weather_date = element_creator("div", "date");
+    const ampm = unix_timestamp_converter(weather.dt) >= 12 ? "pm" : "am";
+    weather_date.innerHTML = `<p>${unix_timestamp_converter(weather.dt) +
+      ampm}</p>`;
+    icon.innerHTML = `<img src="http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" class="current_weather_icon" />`;
     temp.innerHTML = `<p>${kelvin_to_fahrenheit(weather.main.temp)}&deg</p>`;
+    entryHolder.appendChild(icon);
     entryHolder.appendChild(temp);
+    entryHolder.appendChild(weather_date);
     entry.appendChild(entryHolder);
   }
 };
@@ -77,6 +88,8 @@ const add_server_data = async () => {
         data[0].current_weather.main.feels_like
       )}&deg</p>`;
       feel_div_children[2].innerHTML = `<p>${data[0].current_weather.weather[0].main}</p>`;
+      weather_append(data[0].future_weather.list.splice(0, 5));
+      console.log(data[0].future_weather.list.splice(0, 5));
     });
   });
 };

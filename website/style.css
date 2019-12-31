@@ -36,7 +36,9 @@ body {
   background: rgba(59, 74, 107, 0.4);
 }
 
-#entryHolder {
+.entryHolder {
+  margin: 0;
+  display: inline;
 }
 
 .zip {
