@@ -18,20 +18,24 @@ app.use(cors());
 // Initialize the main project folder
 app.use(express.static("website"));
 
+//index page
 app.get("/", (req, res) => {
   res.send("index");
 });
 
+//post data from api (current weather data)
 app.post("/", (req, res) => {
   let data = req.body;
   projectData.current_weather = data;
 });
 
+//post data from api (for the 3 hour forcast)
 app.post("/future_weather", (req, res) => {
   let data = req.body;
   projectData.future_weather = data;
 });
 
+//send data from the stored api data.
 app.get("/weather", (req, res) => {
   res.send([projectData]);
 });

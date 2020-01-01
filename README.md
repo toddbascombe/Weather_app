@@ -1,11 +1,13 @@
 # Weather-Journal App Project
 
 ## Overview
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+
+This Weather project is a asynchronous web app that use a Web API and user data to dynamically update the UI.
 
 ## Instructions
-This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
 
-## Extras
-If you are interested in testing your code as you go, you can use `tests.js` as a template for writing and running some basic tests for your code.
-# Weather_app
+In order to use this Web app you need to:
+
+1. clone or download this repo
+2. go to the download and run the node server call: server.js
+3. go to you browser and goto: localhost:8080 or 127.0.0.1:8080
