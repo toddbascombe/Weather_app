@@ -26,7 +26,8 @@ app.get("/", (req, res) => {
 //post data from api (current weather data)
 app.post("/", (req, res) => {
   let data = req.body;
-  projectData.current_weather = data;
+  projectData.current_weather = data.value;
+  projectData.feelings = data.user_feelings;
 });
 
 //post data from api (for the 3 hour forcast)

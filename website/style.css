@@ -17,7 +17,7 @@ body {
 #app {
   position: relative;
   display: grid;
-  grid-template-rows: 5% 15% 50% 25%;
+  grid-template-rows: 5% 25% 40% 25%;
   /* grid-template-columns:  */
   height: 100%;
   grid-template-columns: 100%;
@@ -51,6 +51,14 @@ label[for="zip"],
   width: 50%;
   left: 25%;
 }
+
+#feelings {
+  width: 50%;
+  height: 60px;
+  font-size: 25px;
+  text-align: center;
+}
+
 #zip {
   background-color: #fff;
   border: #22b2da solid 2px;
@@ -74,10 +82,15 @@ label[for="zip"],
 
 .weather__type,
 .current__temp,
-.feel__like {
+.feel__like,
+.user_feelings,
+.error {
   font-size: 2em;
 }
 
+.error {
+  color: red;
+}
 .date {
   font-size: 2rem;
   color: #000;
@@ -160,6 +173,10 @@ button:focus {
   font-family: "Oswald", sans-serif;
 }
 
+#feelings_area {
+  width: 100%;
+}
+
 @media only screen and (min-width: 1200px) {
   .headline {
     font-size: 2rem;
@@ -186,6 +203,6 @@ button:focus {
     height: 5rem;
   }
   #app {
-    grid-template-rows: 5% 18% 40% 30%;
+    grid-template-rows: 5% 25% 35% 32%;
   }
 }

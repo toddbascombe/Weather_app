@@ -10,16 +10,30 @@ const currentApi = "http://api.openweathermap.org/data/2.5/weather?zip=";
 //openweathermap api key
 const apiKey = "&APPID=24ee761b29b537c6cb57bbcd2097d2e3";
 //get the user zipcode input
-const userInfo = () => getWeather(document.querySelector("#zip").value);
+const userInfo = () => {
+  const errors = document.querySelectorAll(".error");
+  const zip = parseInt(document.querySelector("#zip").value, 10);
+  if (isNaN(zip)) {
+    error("Something is wrong with your the ZIPCODE input");
+  } else if (zip == undefined) {
+    error("Zipcode field is empty");
+  } else {
+    if (errors.length > 0) {
+      errors.forEach(element => element.parentNode.removeChild(element));
+    }
+    getWeather(zip, document.querySelector("#feelings").value);
+  }
+};
 
 //getWeather -> fetch data from the api and post the data to the server
-const getWeather = async zip => {
+const getWeather = async (zip, user_feelings) => {
   let [current_weather, future_weather] = await Promise.all([
     fetch(currentApi + zip + apiKey),
     fetch(weatherApi + zip + apiKey)
   ]);
+
   current_weather.json().then(value => {
-    postData("/", value);
+    postData("/", { value, user_feelings });
   });
   future_weather.json().then(value => {
     postData("/future_weather", value);
@@ -52,6 +66,13 @@ const postData = async (url = "", data) => {
 const kelvin_to_fahrenheit = kelvin_temp =>
   Math.round(kelvin_temp * 1.8 - 459.67);
 
+//error message to the DOM
+const error = mesg => {
+  const zip = document.querySelector(".zip");
+  const div = element_creator("div", "error");
+  div.textContent = mesg;
+  zip.appendChild(div);
+};
 //creates a given element and a class
 const element_creator = (element, class_name) => {
   const element_holder = document.createElement(element);
@@ -103,21 +124,28 @@ const add_server_data = async () => {
   const feel_div_children = document.querySelector(".feel").children;
   await fetch("/weather").then(server_data => {
     server_data.json().then(data => {
-      feel_div_children[0].children[0].textContent =
-        data[0].current_weather.name;
-      feel_div_children[1].innerHTML = `<img src="http://openweathermap.org/img/wn/${data[0].current_weather.weather[0].icon}@2x.png" id="current_weather_icon" />`;
-      feel_div_children[3].innerHTML = `<p>${kelvin_to_fahrenheit(
-        data[0].current_weather.main.temp
-      )}&deg</p>`;
-      feel_div_children[4].innerHTML = `<p>Feels like: ${kelvin_to_fahrenheit(
-        data[0].current_weather.main.feels_like
-      )}&deg</p>`;
-      feel_div_children[2].innerHTML = `<p>${data[0].current_weather.weather[0].main}</p>`;
-      const entryHolder = document.querySelectorAll(".entryHolder");
-      if (entryHolder.length > 0) {
-        entryHolder.forEach(element => element.parentNode.removeChild(element));
+      if (data[0].current_weather.cod == "400") {
+        error(data[0].current_weather.message);
+      } else {
+        feel_div_children[5].innerHTML = `<p>Feeling: ${data[0].feelings}</p>`;
+        feel_div_children[0].children[0].textContent =
+          data[0].current_weather.name;
+        feel_div_children[1].innerHTML = `<img src="http://openweathermap.org/img/wn/${data[0].current_weather.weather[0].icon}@2x.png" id="current_weather_icon" />`;
+        feel_div_children[3].innerHTML = `<p>${kelvin_to_fahrenheit(
+          data[0].current_weather.main.temp
+        )}&deg</p>`;
+        feel_div_children[4].innerHTML = `<p>Feels like: ${kelvin_to_fahrenheit(
+          data[0].current_weather.main.feels_like
+        )}&deg</p>`;
+        feel_div_children[2].innerHTML = `<p>${data[0].current_weather.weather[0].main}</p>`;
+        const entryHolder = document.querySelectorAll(".entryHolder");
+        if (entryHolder.length > 0) {
+          entryHolder.forEach(element =>
+            element.parentNode.removeChild(element)
+          );
+        }
+        weather_append(data[0].future_weather.list.splice(0, 5));
       }
-      weather_append(data[0].future_weather.list.splice(0, 5));
     });
   });
 };
