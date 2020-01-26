@@ -4,9 +4,9 @@
 let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
 //forcast data api url
-const weatherApi = "http://api.openweathermap.org/data/2.5/forecast?zip=";
+const weatherApi = "https://api.openweathermap.org/data/2.5/forecast?zip=";
 //current data api url
-const currentApi = "http://api.openweathermap.org/data/2.5/weather?zip=";
+const currentApi = "https://api.openweathermap.org/data/2.5/weather?zip=";
 //openweathermap api key
 const apiKey = "&APPID=24ee761b29b537c6cb57bbcd2097d2e3";
 //get the user zipcode input
