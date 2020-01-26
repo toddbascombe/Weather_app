@@ -5,7 +5,7 @@ projectData = {};
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const port = 8080;
+const port = process.env.PORT || 8080;
 // Start up an instance of app
 const app = express();
 /* Middleware*/
