@@ -3,7 +3,7 @@
 ## Overview
 
 This Weather project is a asynchronous web app that use OpenWeatherMap.com API and user data to dynamically update the UI.
-to view the full web app: 
+to view the full web app: https://weatherjournalapp.herokuapp.com/
 
 ## Instructions
 
